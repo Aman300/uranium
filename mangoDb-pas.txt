@@ -1,0 +1,5 @@
+ password = ByXZ2qfTNQNWF7Uj
+
+mongodb+srv://Aman300:ByXZ2qfTNQNWF7Uj@cluster0.o4rcy.mongodb.net/aman300-DB?retryWrites=true&w=majority
+
+mongodb+srv://Aman300:ByXZ2qfTNQNWF7Uj@cluster0.o4rcy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority
