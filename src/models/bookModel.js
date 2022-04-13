@@ -5,7 +5,10 @@ const bookSchema = new mongoose.Schema( {
         type: String,
         required: true
     },
-    year: Number,
+    year: {
+        type: Number,
+        default: 2022,
+    },
     tags: [String],
     authorName: String, 
     totalPage: Number,
