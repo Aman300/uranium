@@ -2,6 +2,7 @@
 const NewBookModel= require("../models/NewBookModel")
 const NewAuthorModel= require("../models/NewAuthorModel")
 const NewPublisherModel= require("../models/NewPublisherModel")
+const { validate } = require("../models/NewBookModel")
 
 const createPublisher= async function (req, res) {
     let publisher = req.body
@@ -17,8 +18,12 @@ const createAuthor= async function (req, res) {
 
 const createBook= async function (req, res) {
     let book = req.body
-    let bookCreated = await NewBookModel.create(book)
-    res.send({data: bookCreated})
+    if(book.author_id == "625a48bb59bb1cc23aa5f37f" && book.publisher_id == "625a48ef59bb1cc23aa5f381"){
+        let bookCreated = await NewBookModel.create(book)
+        res.send({data: bookCreated})
+    }else{
+        res.send({mes: 'error'})
+    }
 }
 
 const getBooksWithAuthorDetails = async function (req, res) {
@@ -27,18 +32,7 @@ const getBooksWithAuthorDetails = async function (req, res) {
 
 }
 
-const getBooksAllCondition = async function (req, res) {
-    let data = req.body
-    console.log(data);
-    //The authorId is present in the request body. If absent send an error message that this detail is required
-    let specificBook = await NewBookModel.find().select({data})
-    res.send({data: specificBook})
-
-}
-
 module.exports.createBook= createBook
 module.exports.createPublisher= createPublisher
 module.exports.createAuthor= createAuthor
 module.exports.getBooksWithAuthorDetails = getBooksWithAuthorDetails
-
-module.exports.getBooksAllCondition = getBooksAllCondition
