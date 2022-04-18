@@ -16,6 +16,10 @@ const bookSchema = new mongoose.Schema( {
         ref: "NewPublisher",
         required:true
     }, 
+    isHardCover:{
+        type:Boolean,
+        default: false,
+    }
     
      
 		//author:"61951bfa4d9fe0d34da86829",

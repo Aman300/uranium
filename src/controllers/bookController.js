@@ -2,7 +2,7 @@
 const NewBookModel= require("../models/NewBookModel")
 const NewAuthorModel= require("../models/NewAuthorModel")
 const NewPublisherModel= require("../models/NewPublisherModel")
-const { validate } = require("../models/NewBookModel")
+//const { validate } = require("../models/NewBookModel")
 
 const createPublisher= async function (req, res) {
     let publisher = req.body
@@ -18,7 +18,7 @@ const createAuthor= async function (req, res) {
 
 const createBook= async function (req, res) {
     let book = req.body
-    if(book.author_id == "625a48bb59bb1cc23aa5f37f" && book.publisher_id == "625a48ef59bb1cc23aa5f381"){
+    if(book.author_id == book.author_id && book.publisher_id == book.publisher_id){
         let bookCreated = await NewBookModel.create(book)
         res.send({data: bookCreated})
     }else{
@@ -31,8 +31,34 @@ const getBooksWithAuthorDetails = async function (req, res) {
     res.send({data: specificBook})
 
 }
+const findPubisher = async function (req, res) {
+    let book = await NewBookModel.find().populate(['author_id','publisher_id'])
+    let data = [];
+    for (let i = 0; i < book.length; i++) {
+        const element = book[i];
+        if(element.author_id){
+            element.author_id.rating += 10
+        } 
+        data.push(element.author_id.rating)
+    }
+    res.send({data: data})
+}
 
+const ratingIncrease = async function (req, res) {
+    let book = await NewBookModel.find().populate(['author_id','publisher_id'])
+    let data = [];
+    for (let i = 0; i < book.length; i++) {
+        const element = book[i];
+        if(element.author_id.rating > 3.5){
+            element.author_id.rating += 10
+        }
+        data.push(element.author_id.rating)
+    }
+    res.send({data: data})
+}
 module.exports.createBook= createBook
 module.exports.createPublisher= createPublisher
 module.exports.createAuthor= createAuthor
 module.exports.getBooksWithAuthorDetails = getBooksWithAuthorDetails
+module.exports.findPubisher = findPubisher
+module.exports.ratingIncrease = ratingIncrease
